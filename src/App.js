@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react'
 import './App.css';
+import BookContainer from './containers/BookContainer'
+import NavBar from './components/NavBar'
+import Login from './containers/Login'
+import Favorites from './containers/Favorites'
+import Header from './components/Header'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+import {BrowserRouter as Router, Route} from 'react-router-dom'
+
+
+export class App extends Component {
+
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+             user_id: 2,
+             name: "Kelliann"
+        }
+    }
+    
+    render() {
+        return (
+            <div className="App">
+                <Router>
+                <NavBar/>
+                    <Route exact path="/" component={Header}/>
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/favorites" render={(props) => <Favorites {...props} user_id={this.state.user_id}/>}/>
+                    <Route exact path="/" render={(props) => <BookContainer  {...props} user_id={this.state.user_id}/>}/>
+                </Router>
+            </div>
+        )
+    }
 }
 
-export default App;
+export default App
+
